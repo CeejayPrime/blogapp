@@ -1,0 +1,48 @@
+body{
+    margin: auto;
+}
+header{
+    background: blue;
+    text-align: center;
+    text-color: white;
+}
+
+header h1 a{
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+}
+
+h1 {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.nav-right{
+    display: flex;
+    padding-top: 2rem;
+}
+
+.post-entry{
+    margin-bottom: 2rem;
+}
+
+.post-entry h3 {
+    margin: 0.5rem 0;
+}
+
+.post-entry h3 a,
+.post-entry h3 a:visited{
+    color: blue;
+    text-decoration: none;
+}
+
+.post-entry p {
+    margin: 0;
+    font-weight: 400;
+}
+
+.post-entry h3 a:hover{
+    color: red;
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'base.html' %}
+<head>
+    <meta charset="UTF-8">
+    <title>Django Blog</title>
+</head>
+<body>
+    {% block content %}
+        <div id="container">
+            <div class="row">
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-8">
+                     <div class="post-entry">
+                         {% for post in object_list %}
+                             <h3><a href="{% url 'posts' post.id %}">{{ post.title }}</a></h3>
+                             <p>{{ post.body }}</p>
+                         {% endfor %}
+                     </div>
+                </div>
+                <div class="col-md-2">
+
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+</body>
+</html>
