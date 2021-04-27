@@ -19,9 +19,11 @@
                     <div class="post-entry">
                         <h3>{{ post.title }}</h3>
                         <p>{{ post.body }}</p>
+                        <p>{{ comment.body }}</p>
                     </div>
                     <a href="{% url 'edit_post' post.id %}">Edit Post</a>
                     <a href="{% url 'delete_post' post.id %}">Delete Post</a>
+                    <a href="{% url 'comment' %}">comment</a>
                 </div>
                 <div class="col-md-2">
 

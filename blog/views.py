@@ -2,17 +2,16 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.views.generic.base import View
 from .decorators import unauthenticated_user, allowed_users, admin_only
 from django.contrib.auth.decorators import login_required
-from . forms import UserRegisterForm
+from . forms import UserRegisterForm, CommentForm
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
-from . models import Post
+from . models import Post, Comments
 
 
 class BlogListView(ListView):
@@ -83,6 +82,41 @@ def LogoutView(request):
 # class UserView(DetailView):
 #     model = Post
 #     template_name = 'posts.html'
+
+
+def CommentView(request):
+    def post_detail(request, year, month, day, post):
+        post = get_object_or_404(Post, slug=post,
+                                 status='published',
+                                 publish__year=year,
+                                 publish__month=month,
+                                 publish__day=day)
+
+        # List of active comments for this post
+        comments = post.comments.filter(active=True)
+
+        new_comment = None
+
+        if request.method == 'POST':
+            # A comment was posted
+            comment_form = CommentForm(data=request.POST)
+            if comment_form.is_valid():
+                # Create Comment object but don't save to database yet
+                new_comment = comment_form.save(commit=False)
+                # Assign the current post to the comment
+                new_comment.post = post
+                # Save the comment to the database
+                new_comment.save()
+        else:
+            comment_form = CommentForm()
+        return render(request,
+                      'blog/post/detail.html',
+                      {'post': post,
+                       'comments': comments,
+                       'new_comment': new_comment,
+                       'comment_form': comment_form})
+
+
 
 
 
