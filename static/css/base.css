@@ -14,7 +14,18 @@ header h1 a{
     text-align: center;
 }
 
+header a{
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
 h1 {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+h4 {
     padding-top: 25px;
     padding-bottom: 25px;
 }

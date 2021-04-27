@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.views.generic.base import View
 from .decorators import unauthenticated_user, allowed_users, admin_only
@@ -24,6 +25,7 @@ class BlogDetailView(DetailView):
     template_name = 'posts.html'
 
 
+@method_decorator(login_required, name='dispatch')
 class BlogCreateView(CreateView):
     model = Post
     login_required = True
@@ -31,6 +33,7 @@ class BlogCreateView(CreateView):
     fields = ['title', 'author', 'body']
 
 
+@method_decorator(login_required, name='dispatch')
 class BlogUpdateView(UpdateView):
     model = Post
     login_required = True
@@ -38,6 +41,7 @@ class BlogUpdateView(UpdateView):
     fields = ['title', 'body']
 
 
+@method_decorator(login_required, name='dispatch')
 class BlogDeleteView(DeleteView):
     login_required = True
     model = Post
@@ -73,6 +77,12 @@ def LoginView(request):
 def LogoutView(request):
     logout(request)
     return redirect('login')
+
+
+# @method_decorator(login_required, name='dispatch')
+# class UserView(DetailView):
+#     model = Post
+#     template_name = 'posts.html'
 
 
 
