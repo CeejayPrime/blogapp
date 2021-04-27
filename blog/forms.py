@@ -16,4 +16,9 @@ class UserRegisterForm(UserCreationForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comments
-        fields = ('name', 'email', 'body')
+        fields = ('post', 'name', 'email', 'body')
+
+    def _clean_fields(self):
+        self.fields.pop('post_id')
+        super()._clean_fields()
+

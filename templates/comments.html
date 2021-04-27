@@ -10,12 +10,37 @@
 </head>
 <body>
     {% block content %}
+    <div id="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
         <p>Write a comment</p>
         <form action="" method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fas fa-user">Title</i></span>
+                </div>
+                {{form.name}}
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fas fa-user">Email</i></span>
+                </div>
+                {{form.email}}
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fas fa-user">Body</i></span>
+                </div>
+                {{form.body}}
+            </div>
             <input type="submit" value="Save">
         </form>
+                <div class="col-md-2"></div>
+                </div>
+            </div>
+        </div>
     {% endblock %}
 
 </body>

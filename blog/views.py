@@ -23,6 +23,21 @@ class BlogDetailView(DetailView):
     model = Post
     template_name = 'posts.html'
 
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        comments_connected = Comments.objects.filter(post=self.get_object()).order_by('-pub_date')
+        data['comments'] = comments_connected
+        if self.request.user.is_authenticated:
+            data['comment_form'] = CommentForm(instance=self.request.user)
+        return data
+
+    def post(self, request, *args, **kwargs):
+        new_comment = Comments(body=request.POST.get('body'),
+                              name=self.request.user,
+                              post=self.get_object())
+        new_comment.save()
+        return self.get(self, request, *args, **kwargs)
+
 
 @method_decorator(login_required, name='dispatch')
 class BlogCreateView(CreateView):
@@ -84,37 +99,39 @@ def LogoutView(request):
 #     template_name = 'posts.html'
 
 
-def CommentView(request):
-    def post_detail(request, year, month, day, post):
-        post = get_object_or_404(Post, slug=post,
-                                 status='published',
-                                 publish__year=year,
-                                 publish__month=month,
-                                 publish__day=day)
+# class CommentView(CreateView):
+#     model = Comments
+#     template_name = 'comments.html'
+#     fields = ['name', 'email', 'body']
+#
+#     def get_queryset(self):
+#         return get_object_or_404(Post, category__slug=self.kwargs['category_slug'],
+#                                  slug=self.kwargs['comment_slug'])
 
-        # List of active comments for this post
-        comments = post.comments.filter(active=True)
 
-        new_comment = None
-
-        if request.method == 'POST':
-            # A comment was posted
-            comment_form = CommentForm(data=request.POST)
-            if comment_form.is_valid():
-                # Create Comment object but don't save to database yet
-                new_comment = comment_form.save(commit=False)
-                # Assign the current post to the comment
-                new_comment.post = post
-                # Save the comment to the database
-                new_comment.save()
-        else:
-            comment_form = CommentForm()
-        return render(request,
-                      'blog/post/detail.html',
-                      {'post': post,
-                       'comments': comments,
-                       'new_comment': new_comment,
-                       'comment_form': comment_form})
+# def CommentView(request, slug):
+#     template_name = 'post_detail.html'
+#     post = get_object_or_404(Post, slug=slug)
+#     comments = post.comments.filter(active=True)
+#     new_comment = None
+#     # Comment posted
+#     if request.method == 'POST':
+#         comment_form = CommentForm(data=request.POST)
+#         if comment_form.is_valid():
+#
+#             # Create Comment object but don't save to database yet
+#             new_comment = comment_form.save(commit=False)
+#             # Assign the current post to the comment
+#             new_comment.post = post
+#             # Save the comment to the database
+#             new_comment.save()
+#     else:
+#         comment_form = CommentForm()
+#
+#     return render(request, template_name, {'post': post,
+#                                            'comments': comments,
+#                                            'new_comment': new_comment,
+#                                            'comment_form': comment_form})
 
 
 

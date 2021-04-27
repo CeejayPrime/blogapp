@@ -13,7 +13,24 @@
         <h1>New Post</h1>
         <form action="" method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fas fa-user">Title</i></span>
+                </div>
+                {{form.title}}
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fas fa-user">Author</i></span>
+                </div>
+                {{form.author}}
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fas fa-user">Body</i></span>
+                </div>
+                {{form.body}}
+            </div>
             <input type="submit" value="Save">
         </form>
     {% endblock %}
