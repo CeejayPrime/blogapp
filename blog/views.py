@@ -1,12 +1,10 @@
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.views.generic.base import View
-from .decorators import unauthenticated_user, allowed_users, admin_only
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView
+from .decorators import unauthenticated_user
 from django.contrib.auth.decorators import login_required
 from . forms import UserRegisterForm, CommentForm
 from django.views.generic.edit import CreateView
