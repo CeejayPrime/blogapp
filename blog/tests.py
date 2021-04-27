@@ -19,7 +19,7 @@ class BlogTests(TestCase):
         )
 
     def test_string_representation(self):
-        post = Post(title="A simple title"),
+        post = Post(title="A good title"),
         self.assertEqual(str(post), post.title)
 
     def test_post_content(self):
