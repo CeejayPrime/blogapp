@@ -132,3 +132,19 @@ STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/login'
+
+"""
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = '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'
+EMAIL_HOST_PASSWORD = 'M1ch@31oP@55w0r9'
+ """
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'echinonso8@gmail.com'
