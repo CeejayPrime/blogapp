@@ -1,1 +1,1 @@
-web: gunicorn C:\Users\Chinonso Iwuh\PycharmProjects\blog\.wsgi
+web: gunicorn config.wsgi
